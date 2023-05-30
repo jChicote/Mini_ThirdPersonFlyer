@@ -11,20 +11,20 @@ namespace ThirdPersonFlyer.CoreSystems
         #region - - - - - - Fields - - - - - -
 
         // References
-        private Rigidbody m_FlightRigidbody;
-        private Transform m_CameraTransform;
-        private Transform m_CameraRigTransform;
-        private Transform m_CameraViewAimTransform;
+        public Rigidbody m_FlightRigidbody;
+        public Transform m_CameraTransform;
+        public Transform m_CameraRigTransform;
+        public Transform m_CameraViewAimTransform;
 
         // Default values
-        private float m_DefaultThrottlePower;
+        public float m_DefaultThrottlePower;
 
         // Current values
-        private float m_ThrottlePower;
-        private float m_Speed;
-        private Vector3 m_Velocity;
-        private float m_Sensitivity;
-        private float m_CameraSmoothSpeed;
+        public float m_ThrottlePower;
+        public float m_Speed;
+        public Vector3 m_Velocity;
+        public float m_Sensitivity;
+        public float m_CameraSmoothSpeed;
 
         private Vector3 m_MouseAimPosition;
 
@@ -58,8 +58,8 @@ namespace ThirdPersonFlyer.CoreSystems
 
         void Update()
         {
-            this.RotateFlyer();
-            this.MoveFlyer();
+            this.RotateFlyer(Vector2.zero);
+            this.MoveFlyer(0.2f);
         }
 
         public void RotateFlyer(Vector2 screenPosition)
@@ -75,7 +75,7 @@ namespace ThirdPersonFlyer.CoreSystems
                 : Vector3.up;
 
             this.m_CameraRigTransform.rotation = Damp(this.m_CameraRigTransform.rotation,
-                                                    Quaternion.LookRotation(screenPosition.forward, _UpVector),
+                                                    Quaternion.LookRotation(this.m_CameraViewAimTransform.forward, _UpVector),
                                                     this.m_CameraSmoothSpeed,
                                                     Time.deltaTime);
         }
@@ -86,7 +86,9 @@ namespace ThirdPersonFlyer.CoreSystems
             this.m_Velocity = this.m_Speed * throttlePower * this.gameObject.transform.forward;
         }
 
-        public void MoveFlyer(){
+        public void MoveFlyer(float thrustInput)
+        {
+            this.SetThrustControl(thrustInput);
 
         }
 
