@@ -70,8 +70,8 @@ namespace ThirdPersonFlyer.CoreSystems
             this.m_CameraViewAimTransform.Rotate(this.m_CameraTransform.right, _ScaledPosition.y, Space.World);
             this.m_CameraViewAimTransform.Rotate(this.m_CameraTransform.up, _ScaledPosition.x, Space.World);
 
-            Vector3 _UpVector = (Mathf.Abs(this.m_CameraViewAimTransform.forward.y) > 0.9f) 
-                ? this.m_CameraRigTransform.up 
+            Vector3 _UpVector = (Mathf.Abs(this.m_CameraViewAimTransform.forward.y) > 0.9f)
+                ? this.m_CameraRigTransform.up
                 : Vector3.up;
 
             this.m_CameraRigTransform.rotation = Damp(this.m_CameraRigTransform.rotation,
@@ -86,10 +86,10 @@ namespace ThirdPersonFlyer.CoreSystems
             this.m_Velocity = this.m_Speed * throttlePower * this.gameObject.transform.forward;
         }
 
+        //TODO: Change the naming or move the function from being a pass-through
         public void MoveFlyer(float thrustInput)
         {
             this.SetThrustControl(thrustInput);
-
         }
 
         private Quaternion Damp(Quaternion a, Quaternion b, float lambda, float dt)
